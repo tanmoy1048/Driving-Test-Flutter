@@ -40,13 +40,15 @@ class _HomePageState extends State<HomePage> {
                           child: ListView.builder(
                               itemCount: viewModel.questions.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    child: Text(viewModel.questions[index].id
-                                        .toString()),
+                                return Card(
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      child: Text(viewModel.questions[index].id
+                                          .toString()),
+                                    ),
+                                    title: Text(
+                                        viewModel.questions[index].question),
                                   ),
-                                  title:
-                                      Text(viewModel.questions[index].question),
                                 );
                               }),
                           //GridView.extent(
