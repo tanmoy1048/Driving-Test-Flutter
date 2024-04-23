@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'view/favorite/favorite_page.dart';
 import 'view/home/home_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final PageController _pageController = PageController();
   final List<Widget> _list = [
     const HomePage(),
-    const HomePage(),
+    const FavoritePage(),
   ];
 
   @override
