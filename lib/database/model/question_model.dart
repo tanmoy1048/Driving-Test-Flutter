@@ -23,10 +23,10 @@ class QuestionFields {
 }
 
 class QuestionListModel {
-  final int num;
+  final int ind;
   final List<QuestionModel> questions;
 
-  QuestionListModel({required this.num, required this.questions});
+  QuestionListModel({required this.ind, required this.questions});
 }
 
 class QuestionModel {

@@ -31,9 +31,9 @@ class DBService {
 
     return await db.transaction<bool>((txn) async {
       final b = await txn.update(
-        nameTable,
-        {BattleNameFields.openPage: bookmarkId},
-        where: '${BattleNameFields.id} = ?',
+        questionTable,
+        {QuestionFields.favorite: bookmarkId},
+        where: '${QuestionFields.id} = ?',
         whereArgs: [id],
       );
 
@@ -74,38 +74,37 @@ class DBService {
   //   return a > 0 && b > 0;
   // }
 
-  Future<List<BattleNameModel>> getStory() async {
-    List<BattleNameModel> r = [];
+  Future<List<QuestionModel>> getStory() async {
+    List<QuestionModel> r = [];
     try {
       final Database db = await DatabaseHelper.instance.database;
 
       final result =
-          await db.query(nameTable, orderBy: "${BattleNameFields.id} ASC");
+          await db.query(questionTable, orderBy: "${QuestionFields.id} ASC");
 
-      r = result.map((json) => BattleNameModel.fromJson(json)).toList();
+      r = result.map((json) => QuestionModel.fromJson(json)).toList();
     } catch (e) {
       print(e);
     }
     return r;
   }
 
-  Future<List<BattleContentListModel>> getChapters(
+  Future<List<QuestionListModel>> getChapters(
       int startIndex, int totalVolCount) async {
     int vol = startIndex;
-    List<BattleContentListModel> chapters = [];
+    List<QuestionListModel> chapters = [];
     final Database db = await DatabaseHelper.instance.database;
 
     for (vol; vol <= totalVolCount; vol++) {
-      final result = await db.query(contentTable,
-          where: '${BattleContentFields.storyid} = ?',
+      final result = await db.query(questionTable,
+          where: '${QuestionFields.id} = ?',
           whereArgs: [vol],
-          orderBy: "${BattleContentFields.pageNumber} ASC");
+          orderBy: "${QuestionFields.id} ASC");
 
-      chapters.add(BattleContentListModel(
-          contentNum: vol,
-          contents: result
-              .map((json) => BattleContentModel.fromJson(json))
-              .toList()));
+      chapters.add(QuestionListModel(
+          ind: vol,
+          questions:
+              result.map((json) => QuestionModel.fromJson(json)).toList()));
     }
     return chapters;
   }

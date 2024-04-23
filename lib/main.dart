@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
-import 'common/font_viewmodel.dart';
-import 'view/chapters/chapter_viewmodel.dart';
-import 'view/home/home_page.dart';
+import 'dashboard.dart';
 import 'view/home/home_viewmodel.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
@@ -22,17 +20,13 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<HomeViewModel>(
             create: (context) => HomeViewModel(), lazy: false),
-        ChangeNotifierProvider<ChapterViewModel>(
-            create: (context) => ChapterViewModel(), lazy: false),
-        ChangeNotifierProvider<FontSizeViewModel>(
-            create: (context) => FontSizeViewModel(), lazy: false),
       ],
       child: MaterialApp(
         title: 'Driving Test',
         themeMode: ThemeMode.system,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
-        home: const MainPage(),
+        home: const DashboardPage(),
       ),
     );
   }
