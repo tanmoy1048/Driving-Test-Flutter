@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Battles of Mohammad (pbuh)"),
+        title: const Text("Questions"),
       ),
       body: Container(
         child: Consumer<HomeViewModel>(
@@ -41,7 +41,12 @@ class _HomePageState extends State<HomePage> {
                               itemCount: viewModel.questions.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text("1"),
+                                  leading: CircleAvatar(
+                                    child: Text(viewModel.questions[index].id
+                                        .toString()),
+                                  ),
+                                  title:
+                                      Text(viewModel.questions[index].question),
                                 );
                               }),
                           //GridView.extent(
@@ -121,6 +126,11 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        icon: const Icon(Icons.edit_note),
+        label: const Text("Practise"),
       ),
     );
   }
