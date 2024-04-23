@@ -1,8 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../database/db_helper.dart';
-import '../database/model/battle_content_model.dart';
-import '../database/model/battle_name_model.dart';
+import '../database/model/performance_model.dart';
+import '../database/model/question_model.dart';
 
 class DBService {
   // Future<List<SahihBukhariModel>> getFavourites() async {

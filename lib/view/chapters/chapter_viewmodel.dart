@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../database/model/battle_content_model.dart';
+import '../../database/model/performance_model.dart';
 
 import '../../service/db_service.dart';
 

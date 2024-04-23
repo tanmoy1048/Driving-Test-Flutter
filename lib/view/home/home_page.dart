@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/widgets/banner_ads.dart';
 import '../chapters/details.dart';
-import 'main_viewmodel.dart';
+import 'home_viewmodel.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
         //     color: Strings.borderColor,
         //   ),
         // ),
-        child: Consumer<MainViewModel>(
+        child: Consumer<HomeViewModel>(
           builder: (context, viewModel, child) {
             return FutureBuilder(
               future: viewModel.isInitCompleted,
@@ -65,7 +65,7 @@ class _MainPageState extends State<MainPage> {
                             childAspectRatio: 0.8,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 10),
-                            children: viewModel.names
+                            children: viewModel.questions
                                 .map(
                                   (e) => Ink(
                                     child: InkWell(
@@ -114,19 +114,6 @@ class _MainPageState extends State<MainPage> {
                                                 ],
                                               );
                                             }),
-                                            // const SizedBox(
-                                            //   height: 8,
-                                            // ),
-                                            // Text(
-                                            //   e.name.toString(),
-                                            //   textAlign: TextAlign.center,
-                                            //   style: Theme.of(context)
-                                            //       .textTheme
-                                            //       .titleMedium
-                                            //       ?.copyWith(
-                                            //         fontWeight: FontWeight.w600,
-                                            //       ),
-                                            // ),
                                           ],
                                         ),
                                       ),

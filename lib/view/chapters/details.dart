@@ -8,7 +8,7 @@ import '../../common/function/alert_dialog.dart';
 import '../../common/widgets/banner_ads.dart';
 import '../../common/widgets/swipe_demo.dart';
 import '../../service/shared_pref_service.dart';
-import '../main/main_viewmodel.dart';
+import '../home/home_viewmodel.dart';
 import 'chapter_viewmodel.dart';
 
 class DetailsPage extends StatefulWidget {

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'common/font_viewmodel.dart';
 import 'view/chapters/chapter_viewmodel.dart';
-import 'view/main/main_page.dart';
-import 'view/main/main_viewmodel.dart';
+import 'view/home/home_page.dart';
+import 'view/home/home_viewmodel.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<MainViewModel>(
-            create: (context) => MainViewModel(), lazy: false),
+        ChangeNotifierProvider<HomeViewModel>(
+            create: (context) => HomeViewModel(), lazy: false),
         ChangeNotifierProvider<ChapterViewModel>(
             create: (context) => ChapterViewModel(), lazy: false),
         ChangeNotifierProvider<FontSizeViewModel>(
