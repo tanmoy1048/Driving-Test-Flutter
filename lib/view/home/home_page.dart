@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/widgets/banner_ads.dart';
 import '../chapters/details.dart';
+import '../details/details_page.dart';
 import 'home_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,6 +43,14 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return Card(
                                   child: ListTile(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              DetailsPage(initIndex: index),
+                                        ),
+                                      );
+                                    },
                                     leading: CircleAvatar(
                                       child: Text(viewModel.questions[index].id
                                           .toString()),

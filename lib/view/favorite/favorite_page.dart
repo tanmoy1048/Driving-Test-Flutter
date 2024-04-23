@@ -129,11 +129,6 @@ class _FavoritePageState extends State<FavoritePage> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        icon: const Icon(Icons.edit_note),
-        label: const Text("Practise"),
-      ),
     );
   }
 }
