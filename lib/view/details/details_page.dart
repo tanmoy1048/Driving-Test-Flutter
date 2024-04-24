@@ -114,11 +114,14 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             if (currentIndex == 0) SizedBox(),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _choosedAnswer = viewModel.questions[currentIndex].answer;
-                });
-              },
+              onPressed: _choosedAnswer == 0
+                  ? () {
+                      setState(() {
+                        _choosedAnswer =
+                            viewModel.questions[currentIndex].answer;
+                      });
+                    }
+                  : null,
               child: Text("Show Answer"),
             ),
             if (currentIndex != (viewModel.questions.length - 1))
@@ -154,16 +157,30 @@ class _DetailsPageState extends State<DetailsPage> {
     ),
   ];
 
-  Widget answerTile(int answerId, String answer, int correctAnswer) {
+  Widget answerTile(int answerindex, String answer, int correctAnswer) {
     return Card(
+      clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ListTile(
         leading: _choosedAnswer == 0 || _choosedAnswer > 3
             ? icons[2]
-            : _choosedAnswer == answerId && _choosedAnswer == correctAnswer
+            : _choosedAnswer == answerindex && _choosedAnswer == correctAnswer
                 ? icons[0]
-                : icons[2],
+                : _choosedAnswer == answerindex &&
+                        _choosedAnswer != correctAnswer
+                    ? icons[1]
+                    : _choosedAnswer != correctAnswer &&
+                            answerindex == correctAnswer
+                        ? icons[0]
+                        : icons[2],
         title: Text(answer),
+        onTap: _choosedAnswer == 0
+            ? () {
+                setState(() {
+                  _choosedAnswer = answerindex;
+                });
+              }
+            : null,
       ),
     );
   }
