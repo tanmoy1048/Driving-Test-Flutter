@@ -32,27 +32,32 @@ class _DetailsPageState extends State<DetailsPage> {
                 .titleMedium
                 ?.copyWith(color: Theme.of(context).hintColor)),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              viewModel.favoriteAction(
+                id: viewModel.questions[currentIndex].id,
+                isFav: viewModel.questions[currentIndex].favorite == 1
+                    ? false
+                    : true,
+                index: currentIndex,
+              );
+            },
+            icon: Icon(
+              viewModel.questions[currentIndex].favorite == 1
+                  ? Icons.favorite
+                  : Icons.favorite_outline,
+              color: viewModel.questions[currentIndex].favorite == 1
+                  ? Colors.red
+                  : null,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     top: 15.0,
-            //     bottom: 0,
-            //     left: 10,
-            //     right: 10,
-            //   ),
-            //   child: Text(
-            //     "Question ${currentIndex + 1} out of ${viewModel.questions.length}",
-            //     textAlign: TextAlign.center,
-            //     style: Theme.of(context)
-            //         .textTheme
-            //         .titleMedium
-            //         ?.copyWith(color: Theme.of(context).hintColor),
-            //   ),
-            // ),
             Card(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Column(

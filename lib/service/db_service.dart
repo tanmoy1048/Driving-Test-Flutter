@@ -25,20 +25,16 @@ class DBService {
   //   );
   // }
 
-  Future<bool> bookmarkAction(
-      {required int id, required int bookmarkId}) async {
+  Future<bool> favoriteAction({required int id, required int favNum}) async {
     Database db = await DatabaseHelper.instance.database;
 
-    return await db.transaction<bool>((txn) async {
-      final b = await txn.update(
-        questionTable,
-        {QuestionFields.favorite: bookmarkId},
-        where: '${QuestionFields.id} = ?',
-        whereArgs: [id],
-      );
-
-      return b > 0;
-    });
+    final b = await db.update(
+      questionTable,
+      {QuestionFields.favorite: favNum},
+      where: '${QuestionFields.id} = ?',
+      whereArgs: [id],
+    );
+    return b > 0;
   }
 
   // Future<bool> removeBookmark(int vol, int bookId) async {

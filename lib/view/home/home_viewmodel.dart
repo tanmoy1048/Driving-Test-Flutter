@@ -22,11 +22,16 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<bool> bookmarkAction(
-  //     {required int bookmarkId, required int id, required int index}) async {
-  //   final data = await dBService.bookmarkAction(bookmarkId: bookmarkId, id: id);
-  //   _names[index].openPage = bookmarkId;
-  //   notifyListeners();
-  //   return data;
-  // }
+  Future<bool> favoriteAction(
+      {required int id, required bool isFav, required int index}) async {
+    final int favNum = isFav ? 1 : 0;
+    final data = await dBService.favoriteAction(id: id, favNum: favNum);
+    if (data) {
+      _questions[index].favorite = favNum;
+      notifyListeners();
+      return data;
+    } else {
+      return false;
+    }
+  }
 }
