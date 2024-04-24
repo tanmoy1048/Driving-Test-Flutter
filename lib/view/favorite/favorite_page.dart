@@ -23,6 +23,17 @@ class _FavoritePageState extends State<FavoritePage> {
             future: viewModel.isInitCompleted,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                if (viewModel.questions
+                        .every((element) => element.favorite != 1)
+                    // .any((element) => element.favorite != 1)
+                    ) {
+                  return const Center(
+                    child: Text(
+                      "Favorite list is Empty",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  );
+                }
                 return Flex(
                   direction: Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -30,34 +41,30 @@ class _FavoritePageState extends State<FavoritePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // BannerAds(),
-                    if (viewModel.questions.isNotEmpty)
-                      Flexible(
-                        child: Scrollbar(
-                          thumbVisibility: false,
-                          child: ListView.builder(
-                            itemCount: viewModel.questions.length,
-                            itemBuilder: (context, index) {
-                              if (viewModel.questions[index].favorite == 1) {
-                                return Card(
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      child: Text(index.toString()),
-                                    ),
-                                    title: Text(
-                                        viewModel.questions[index].question),
+
+                    Flexible(
+                      child: Scrollbar(
+                        thumbVisibility: false,
+                        child: ListView.builder(
+                          itemCount: viewModel.questions.length,
+                          itemBuilder: (context, index) {
+                            if (viewModel.questions[index].favorite == 1) {
+                              return Card(
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    child: Text(index.toString()),
                                   ),
-                                );
-                              } else {
-                                return SizedBox();
-                              }
-                            },
-                          ),
+                                  title:
+                                      Text(viewModel.questions[index].question),
+                                ),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          },
                         ),
                       ),
-                    if (viewModel.questions.isEmpty)
-                      const Flexible(
-                        child: Text("Favorite list is Empty"),
-                      ),
+                    ),
                   ],
                 );
               } else {
