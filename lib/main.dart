@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'dashboard.dart';
+import 'view/favorite/favorite_viewmodel.dart';
 import 'view/home/home_viewmodel.dart';
 
 void main() {
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<HomeViewModel>(
             create: (context) => HomeViewModel(), lazy: false),
+        ChangeNotifierProvider<FavoriteViewModel>(
+            create: (context) => FavoriteViewModel(), lazy: false),
       ],
       child: MaterialApp(
         title: 'Driving Test',

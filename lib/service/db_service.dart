@@ -85,6 +85,23 @@ class DBService {
     return r;
   }
 
+  Future<List<QuestionModel>> getFavQuestion() async {
+    List<QuestionModel> r = [];
+    try {
+      final Database db = await DatabaseHelper.instance.database;
+
+      final result = await db.query(questionTable,
+          where: '${QuestionFields.favorite} = ?',
+          whereArgs: [1],
+          orderBy: "${QuestionFields.id} ASC");
+
+      r = result.map((json) => QuestionModel.fromJson(json)).toList();
+    } catch (e) {
+      print(e);
+    }
+    return r;
+  }
+
   Future<List<QuestionListModel>> getChapters(
       int startIndex, int totalVolCount) async {
     int vol = startIndex;

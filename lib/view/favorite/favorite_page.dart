@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../details/details_page_favorite.dart';
 import '../home/home_viewmodel.dart';
+import 'favorite_viewmodel.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -17,16 +19,13 @@ class _FavoritePageState extends State<FavoritePage> {
       appBar: AppBar(
         title: const Text("Favorite"),
       ),
-      body: Consumer<HomeViewModel>(
+      body: Consumer<FavoriteViewModel>(
         builder: (context, viewModel, child) {
           return FutureBuilder(
             future: viewModel.isInitCompleted,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                if (viewModel.questions
-                        .every((element) => element.favorite != 1)
-                    // .any((element) => element.favorite != 1)
-                    ) {
+                if (viewModel.favQuestions.isEmpty) {
                   return const Center(
                     child: Text(
                       "Favorite list is Empty",
@@ -46,21 +45,38 @@ class _FavoritePageState extends State<FavoritePage> {
                       child: Scrollbar(
                         thumbVisibility: false,
                         child: ListView.builder(
-                          itemCount: viewModel.questions.length,
+                          itemCount: viewModel.favQuestions.length,
                           itemBuilder: (context, index) {
-                            if (viewModel.questions[index].favorite == 1) {
-                              return Card(
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Card(
+                                clipBehavior: Clip.hardEdge,
                                 child: ListTile(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => DetailsPageFavorite(
+                                            initIndex: index),
+                                      ),
+                                    )
+                                        .then((value) {
+                                      context
+                                          .read<FavoriteViewModel>()
+                                          .getData();
+                                      context.read<HomeViewModel>().getData();
+                                    });
+                                  },
                                   leading: CircleAvatar(
-                                    child: Text(index.toString()),
+                                    backgroundColor: Colors.redAccent,
+                                    child: Text("${index + 1}"),
                                   ),
-                                  title:
-                                      Text(viewModel.questions[index].question),
+                                  title: Text(
+                                      viewModel.favQuestions[index].question),
                                 ),
-                              );
-                            } else {
-                              return SizedBox();
-                            }
+                              ),
+                            );
                           },
                         ),
                       ),
