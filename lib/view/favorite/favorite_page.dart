@@ -58,13 +58,13 @@ class _FavoritePageState extends State<FavoritePage> {
                                         .push(
                                       MaterialPageRoute(
                                         builder: (ctx) => DetailsPageFavorite(
-                                            initIndex: index),
+                                          initIndex: index,
+                                          favQuestions: viewModel.favQuestions,
+                                        ),
                                       ),
                                     )
                                         .then((value) {
-                                      context
-                                          .read<FavoriteViewModel>()
-                                          .getData();
+                                      viewModel.getData();
                                       context.read<HomeViewModel>().getData();
                                     });
                                   },

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../database/model/question_model.dart';
 import '../favorite/favorite_viewmodel.dart';
-import '../home/home_viewmodel.dart';
 
 class DetailsPageFavorite extends StatefulWidget {
-  const DetailsPageFavorite({super.key, required this.initIndex});
+  const DetailsPageFavorite(
+      {super.key, required this.initIndex, required this.favQuestions});
   final int initIndex;
+  final List<QuestionModel> favQuestions;
 
   @override
   State<DetailsPageFavorite> createState() => _DetailsPageFavoriteState();
@@ -27,7 +29,7 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Question ${currentIndex + 1} out of ${viewModel.favQuestions.length}",
+          "Question ${currentIndex + 1} out of ${widget.favQuestions.length}",
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -39,8 +41,8 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
             onPressed: () {
               viewModel
                   .favoriteAction(
-                id: viewModel.favQuestions[currentIndex].id,
-                isFav: viewModel.favQuestions[currentIndex].favorite == 1
+                id: widget.favQuestions[currentIndex].id,
+                isFav: widget.favQuestions[currentIndex].favorite == 1
                     ? false
                     : true,
                 index: currentIndex,
@@ -50,10 +52,10 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
               });
             },
             icon: Icon(
-              viewModel.favQuestions[currentIndex].favorite == 1
+              widget.favQuestions[currentIndex].favorite == 1
                   ? Icons.favorite
                   : Icons.favorite_outline,
-              color: viewModel.favQuestions[currentIndex].favorite == 1
+              color: widget.favQuestions[currentIndex].favorite == 1
                   ? Colors.red
                   : null,
             ),
@@ -72,7 +74,7 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 20),
                     child: Text(
-                      viewModel.favQuestions[currentIndex].question,
+                      widget.favQuestions[currentIndex].question,
                       textAlign: TextAlign.left,
                       style: Theme.of(context)
                           .textTheme
@@ -82,7 +84,7 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
                               fontFamily: "Nunito"),
                     ),
                   ),
-                  if (viewModel.favQuestions[currentIndex].image != 0)
+                  if (widget.favQuestions[currentIndex].image != 0)
                     Container(
                       margin: const EdgeInsets.only(
                           left: 10, right: 10, bottom: 15),
@@ -92,7 +94,7 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
                           borderRadius: BorderRadius.circular(15)),
                       clipBehavior: Clip.hardEdge,
                       child: Image.asset(
-                        "assets/images/${questionImages[viewModel.favQuestions[currentIndex].image - 1]}.png",
+                        "assets/images/${questionImages[widget.favQuestions[currentIndex].image - 1]}.png",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -100,12 +102,12 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
               ),
             ),
             const SizedBox(height: 10),
-            answerTile(1, viewModel.favQuestions[currentIndex].answer1,
-                viewModel.favQuestions[currentIndex].answer),
-            answerTile(2, viewModel.favQuestions[currentIndex].answer2,
-                viewModel.favQuestions[currentIndex].answer),
-            answerTile(3, viewModel.favQuestions[currentIndex].answer3,
-                viewModel.favQuestions[currentIndex].answer),
+            answerTile(1, widget.favQuestions[currentIndex].answer1,
+                widget.favQuestions[currentIndex].answer),
+            answerTile(2, widget.favQuestions[currentIndex].answer2,
+                widget.favQuestions[currentIndex].answer),
+            answerTile(3, widget.favQuestions[currentIndex].answer3,
+                widget.favQuestions[currentIndex].answer),
           ],
         ),
       ),
@@ -130,25 +132,25 @@ class _DetailsPageFavoriteState extends State<DetailsPageFavorite> {
                   ? () {
                       setState(() {
                         _choosedAnswer =
-                            viewModel.favQuestions[currentIndex].answer;
+                            widget.favQuestions[currentIndex].answer;
                       });
                     }
                   : null,
               child: const Text("Show Answer"),
             ),
-            if (currentIndex != (viewModel.favQuestions.length - 1))
+            if (currentIndex != (widget.favQuestions.length - 1))
               IconButton(
                 onPressed: () {
                   setState(() {});
                   _choosedAnswer = 0;
                   currentIndex =
-                      currentIndex != (viewModel.favQuestions.length - 1)
+                      currentIndex != (widget.favQuestions.length - 1)
                           ? currentIndex + 1
-                          : (viewModel.favQuestions.length - 1);
+                          : (widget.favQuestions.length - 1);
                 },
                 icon: const Icon(Icons.arrow_forward_ios_rounded),
               ),
-            if (currentIndex == (viewModel.favQuestions.length - 1))
+            if (currentIndex == (widget.favQuestions.length - 1))
               const SizedBox(),
           ],
         ),
