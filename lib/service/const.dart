@@ -32,7 +32,15 @@ class Strings {
     if (kDebugMode) {
       return "ca-app-pub-3940256099942544/6300978111"; // debug test id
     } else {
-      return "ca-app-pub-5253224370915598/5294630665"; //release id
+      return "ca-app-pub-5253224370915598/7623717869"; //release id
+    }
+  }
+
+  static String getInterstitialAdIdAndroid() {
+    if (kDebugMode) {
+      return "ca-app-pub-3940256099942544/1033173712"; // debug test id
+    } else {
+      return "ca-app-pub-5253224370915598/1958960668"; //release id
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/function/alert_dialog.dart';
+import '../../common/widgets/banner_ads.dart';
 import '../details/details_page_home.dart';
 import '../practise/practise_page.dart';
 import 'home_viewmodel.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // BannerAds(),
+                      BannerAds(),
                       Flexible(
                         child: NotificationListener<UserScrollNotification>(
                           onNotification: (notification) {

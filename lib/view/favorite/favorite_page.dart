@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/widgets/banner_ads.dart';
 import '../details/details_page_favorite.dart';
 import '../home/home_viewmodel.dart';
 import 'favorite_viewmodel.dart';
@@ -39,8 +40,7 @@ class _FavoritePageState extends State<FavoritePage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // BannerAds(),
-
+                    BannerAds(),
                     Flexible(
                       child: Scrollbar(
                         thumbVisibility: false,
