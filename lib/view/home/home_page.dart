@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/function/alert_dialog.dart';
 import '../details/details_page_home.dart';
+import '../practise/practise_page.dart';
 import 'home_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
@@ -109,12 +113,55 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: isFabVisible
           ? FloatingActionButton.extended(
               heroTag: "fab",
-              onPressed: () {},
+              onPressed: () async {
+                await showMyDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    actionsAlignment: MainAxisAlignment.spaceEvenly,
+                    title: Text("Practise"),
+                    body: Text(
+                        "You have to answer 15 question. There is no time limit but there is a timer to track the time you taken. Goodluck."),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Cancel"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                            ..pop()
+                            ..push(
+                              MaterialPageRoute(
+                                builder: (ctx) => PractiseQuestionPage(
+                                  randomQuestionIndex: randomNumber(),
+                                  questionsAll:
+                                      context.read<HomeViewModel>().questions,
+                                ),
+                              ),
+                            );
+                        },
+                        child: Text("Start"),
+                      ),
+                    ]);
+              },
               icon: const Icon(Icons.edit_note),
               label: const Text("Practise"),
             )
           : null,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
     );
+  }
+
+  List<int> randomNumber() {
+    final random = Random();
+    final Set<int> uniqueNumbers = {};
+
+    while (uniqueNumbers.length < 15) {
+      uniqueNumbers.add(random.nextInt(169) + 1);
+    }
+
+    return uniqueNumbers.toList();
   }
 }

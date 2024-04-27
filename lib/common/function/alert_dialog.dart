@@ -6,6 +6,7 @@ Future<void> showMyDialog({
   Widget? body,
   List<Widget>? actions,
   bool barrierDismissible = true,
+  MainAxisAlignment? actionsAlignment,
 }) async {
   return showDialog<void>(
     context: context,
@@ -16,6 +17,7 @@ Future<void> showMyDialog({
         title: title,
         content: body,
         actions: actions,
+        actionsAlignment: actionsAlignment,
       );
     },
   );
