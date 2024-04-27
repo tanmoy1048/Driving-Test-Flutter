@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/function/alert_dialog.dart';
 import '../../common/widgets/answer_tile.dart';
 import '../../database/model/question_model.dart';
 import '../../service/const.dart';
 import '../favorite/favorite_viewmodel.dart';
+import 'result_page.dart';
 
 class PractiseQuestionPage extends StatefulWidget {
   const PractiseQuestionPage(
@@ -231,12 +231,23 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
                     onPressed: _choosedAnswer != 0
                         ? () {
                             if (currentIndex + 1 == questionPage.length) {
-                              print("finish");
-                              choosedAnswersList.forEach((element) {
-                                print(element.choosedIndex);
-                                print(element.correctIndex);
-                                print(element.isCorrect);
-                              });
+                              stopwatch.stop();
+
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (ctx) => ResultPage(
+                                  duration: stopwatch.elapsed,
+                                  questions: questionPage,
+                                  choosedAnswersList: choosedAnswersList,
+                                ),
+                              ));
+
+                              // print("finish");
+                              // choosedAnswersList.forEach((element) {
+                              //   print(element.choosedIndex);
+                              //   print(element.correctIndex);
+                              //   print(element.isCorrect);
+                              // });
                             } else {
                               setState(() {
                                 _choosedAnswer = 0;

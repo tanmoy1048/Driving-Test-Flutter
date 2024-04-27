@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                     actionsAlignment: MainAxisAlignment.spaceEvenly,
                     title: Text("Practise"),
                     body: Text(
-                        "You have to answer 15 question. There is no time limit but there is a timer to track the time you taken. Goodluck."),
+                        "You have to answer 15 question. There is no time limit but there is a timer to track the time you have taken. Goodluck."),
                     actions: [
                       ElevatedButton(
                         onPressed: () {
