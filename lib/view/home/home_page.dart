@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/function/alert_dialog.dart';
 import '../../common/widgets/banner_ads.dart';
+import '../../service/const.dart';
 import '../details/details_page_home.dart';
 import '../practise/practise_page.dart';
 import 'home_viewmodel.dart';
@@ -19,6 +21,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isFabVisible = true;
+  InterstitialAd? _interstitialAd;
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,6 +141,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          loadAd();
                           Navigator.of(context)
                             ..pop()
                             ..push(
@@ -141,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                                       context.read<HomeViewModel>().questions,
                                 ),
                               ),
-                            );
+                            ).then((value) => _interstitialAd?.show());
                         },
                         child: Text("Start"),
                       ),
@@ -164,5 +175,21 @@ class _HomePageState extends State<HomePage> {
     }
 
     return uniqueNumbers.toList();
+  }
+
+  void loadAd() {
+    InterstitialAd.load(
+        adUnitId: Strings.getInterstitialAdIdAndroid(),
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+
+            _interstitialAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
   }
 }
