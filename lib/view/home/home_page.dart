@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
     final Set<int> uniqueNumbers = {};
 
     while (uniqueNumbers.length < 15) {
-      uniqueNumbers.add(random.nextInt(169) + 1);
+      uniqueNumbers.add(random.nextInt(168) + 1);
     }
 
     return uniqueNumbers.toList();

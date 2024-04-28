@@ -35,11 +35,73 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text("$correctAnswer/15"),
-          Text("Time: ${formattedDurationText(widget.duration)}"),
-        ],
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Quiz Result",
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium
+              ?.copyWith(fontWeight: FontWeight.bold, fontFamily: "Nunito"),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/result_bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Text(
+              //   "Quiz Result",
+              //   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              //       fontWeight: FontWeight.bold, fontFamily: "Nunito"),
+              // ),
+              Container(
+                height: 200,
+                width: 150,
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Image.asset(
+                  "assets/images/winner.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Text(
+                "Congratulations!",
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold, fontFamily: "Nunito"),
+              ),
+              SizedBox(height: 20),
+              Text(
+                "YOUR SCORE",
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.normal,
+                      //fontFamily: "Nunito",
+                      color: Theme.of(context).hintColor,
+                    ),
+              ),
+              Text(
+                "$correctAnswer / 15",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.bold, fontFamily: "Nunito"),
+              ),
+              Text(
+                "Time: ${formattedDurationText(widget.duration)}",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.normal,
+                      //fontFamily: "Nunito",
+                      color: Theme.of(context).hintColor,
+                    ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

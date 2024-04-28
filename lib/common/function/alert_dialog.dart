@@ -7,6 +7,7 @@ Future<void> showMyDialog({
   List<Widget>? actions,
   bool barrierDismissible = true,
   MainAxisAlignment? actionsAlignment,
+  EdgeInsetsGeometry? contentPadding,
 }) async {
   return showDialog<void>(
     context: context,
@@ -14,6 +15,7 @@ Future<void> showMyDialog({
     useRootNavigator: false,
     builder: (BuildContext context) {
       return AlertDialog(
+        contentPadding: contentPadding,
         title: title,
         content: body,
         actions: actions,
