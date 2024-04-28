@@ -291,12 +291,14 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
                                       context: context,
                                       contentPadding: EdgeInsets.zero,
                                       body: Container(
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/bg.png"),
-                                            fit: BoxFit.cover,
-                                          ),
+                                        decoration: BoxDecoration(
+                                          image: correctAnswer < 13
+                                              ? null
+                                              : const DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/bg.png"),
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                         padding: EdgeInsets.all(15),
                                         child: SingleChildScrollView(
@@ -323,12 +325,16 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 15),
                                                 child: Image.asset(
-                                                  "assets/images/winner.png",
+                                                  correctAnswer < 13
+                                                      ? "assets/images/loose.png"
+                                                      : "assets/images/winner.png",
                                                   fit: BoxFit.contain,
                                                 ),
                                               ),
                                               Text(
-                                                "Congratulations!",
+                                                correctAnswer < 13
+                                                    ? "Oops! Try again"
+                                                    : "Congratulations!",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headlineMedium
@@ -351,16 +357,52 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
                                                           .hintColor,
                                                     ),
                                               ),
-                                              Text(
-                                                "$correctAnswer / 15",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .displaySmall
-                                                    ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily: "Nunito"),
+                                              RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: "$correctAnswer",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displaySmall
+                                                          ?.copyWith(
+                                                            color:
+                                                                correctAnswer <
+                                                                        13
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .green,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontFamily:
+                                                                "Nunito",
+                                                          ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: " / 15",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displaySmall
+                                                          ?.copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontFamily:
+                                                                  "Nunito"),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
+                                              // Text(
+                                              //   "$correctAnswer / 15",
+                                              //   style: Theme.of(context)
+                                              //       .textTheme
+                                              //       .displaySmall
+                                              //       ?.copyWith(
+                                              //           fontWeight:
+                                              //               FontWeight.bold,
+                                              //           fontFamily: "Nunito"),
+                                              // ),
                                               Text(
                                                 "Time: ${formattedDurationText(stopwatch.elapsed)}",
                                                 style: Theme.of(context)
