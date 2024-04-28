@@ -25,7 +25,7 @@ class PractiseQuestionPage extends StatefulWidget {
 }
 
 class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
-  // int _choosedAnswer = 0;
+  bool finishClicked = false;
   int currentIndex = 0;
   List<QuestionModel> questionPage = [];
   List<ChoosedAnswers> choosedAnswersList = List.filled(
@@ -237,161 +237,194 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
             ],
           ),
         ),
-        bottomNavigationBar: choosedAnswersList[currentIndex].choosedIndex == 0
-            ? null
-            : SizedBox(
+        bottomNavigationBar: finishClicked == true
+            ? SizedBox(
                 width: double.infinity,
                 height: 60,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      onPressed: choosedAnswersList[currentIndex]
-                                  .choosedIndex !=
-                              0
-                          ? () {
-                              if (currentIndex + 1 == questionPage.length) {
-                                stopwatch.stop();
-                                int correctAnswer = 0;
-                                for (var item in choosedAnswersList) {
-                                  if (item.isCorrect ?? false) {
-                                    correctAnswer = correctAnswer + 1;
-                                  }
-                                }
-                                showMyDialog(
-                                  context: context,
-                                  contentPadding: EdgeInsets.zero,
-                                  body: Container(
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image:
-                                            AssetImage("assets/images/bg.png"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.all(15),
-                                    child: SingleChildScrollView(
-                                      child: Flex(
-                                        direction: Axis.vertical,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              "Quiz Result",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineMedium
-                                                  ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: "Nunito"),
-                                            ),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Container(
-                                            height: 110,
-                                            width: 100,
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 15),
-                                            child: Image.asset(
-                                              "assets/images/winner.png",
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
-                                          Text(
-                                            "Congratulations!",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium
-                                                ?.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Nunito"),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Text(
-                                            "YOUR SCORE",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.normal,
-                                                  //fontFamily: "Nunito",
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                ),
-                                          ),
-                                          Text(
-                                            "$correctAnswer / 15",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .displaySmall
-                                                ?.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: "Nunito"),
-                                          ),
-                                          Text(
-                                            "Time: ${formattedDurationText(stopwatch.elapsed)}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.normal,
-                                                  //fontFamily: "Nunito",
-                                                  color: Theme.of(context)
-                                                      .hintColor,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text("Show Answers"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        canPop = true;
-                                        Navigator.of(context)
-                                          ..pop()
-                                          ..pop();
-                                      },
-                                      child: Text("Home"),
-                                    ),
-                                  ],
-                                  actionsAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                );
-
-                                // Navigator.of(context)
-                                //     .pushReplacement(MaterialPageRoute(
-                                //   builder: (ctx) => ResultPage(
-                                //     duration: stopwatch.elapsed,
-                                //     questions: questionPage,
-                                //     choosedAnswersList: choosedAnswersList,
-                                //   ),
-                                // ));
-                              } else {
-                                setState(() {
-                                  // _choosedAnswer = 0;
-                                  currentIndex =
-                                      currentIndex != (questionPage.length - 1)
-                                          ? currentIndex + 1
-                                          : (questionPage.length - 1);
-                                });
-                              }
-                            }
-                          : null,
-                      child: Text(currentIndex + 1 == questionPage.length
-                          ? "Finish"
-                          : "Next Question"),
+                      onPressed: () {
+                        currentIndex = currentIndex != 0 ? currentIndex - 1 : 0;
+                        setState(() {});
+                      },
+                      child: Icon(Icons.arrow_back_ios_rounded),
+                    ),
+                    SizedBox(),
+                    ElevatedButton(
+                      onPressed: () {
+                        currentIndex = currentIndex != (questionPage.length - 1)
+                            ? currentIndex + 1
+                            : (questionPage.length - 1);
+                        setState(() {});
+                      },
+                      child: Icon(Icons.arrow_forward_ios_rounded),
                     ),
                   ],
                 ),
-              ),
+              )
+            : choosedAnswersList[currentIndex].choosedIndex == 0
+                ? null
+                : SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: choosedAnswersList[currentIndex]
+                                      .choosedIndex !=
+                                  0
+                              ? () {
+                                  if (currentIndex + 1 == questionPage.length) {
+                                    finishClicked = true;
+                                    setState(() {});
+                                    stopwatch.stop();
+                                    int correctAnswer = 0;
+                                    for (var item in choosedAnswersList) {
+                                      if (item.isCorrect ?? false) {
+                                        correctAnswer = correctAnswer + 1;
+                                      }
+                                    }
+                                    showMyDialog(
+                                      context: context,
+                                      contentPadding: EdgeInsets.zero,
+                                      body: Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/bg.png"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        padding: EdgeInsets.all(15),
+                                        child: SingleChildScrollView(
+                                          child: Flex(
+                                            direction: Axis.vertical,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  "Quiz Result",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineMedium
+                                                      ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontFamily: "Nunito"),
+                                                ),
+                                              ),
+                                              SizedBox(height: 20),
+                                              Container(
+                                                height: 110,
+                                                width: 100,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 15),
+                                                child: Image.asset(
+                                                  "assets/images/winner.png",
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Congratulations!",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineMedium
+                                                    ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: "Nunito"),
+                                              ),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                "YOUR SCORE",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      //fontFamily: "Nunito",
+                                                      color: Theme.of(context)
+                                                          .hintColor,
+                                                    ),
+                                              ),
+                                              Text(
+                                                "$correctAnswer / 15",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displaySmall
+                                                    ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: "Nunito"),
+                                              ),
+                                              Text(
+                                                "Time: ${formattedDurationText(stopwatch.elapsed)}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      //fontFamily: "Nunito",
+                                                      color: Theme.of(context)
+                                                          .hintColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Show Answers"),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            canPop = true;
+                                            Navigator.of(context)
+                                              ..pop()
+                                              ..pop();
+                                          },
+                                          child: Text("Home"),
+                                        ),
+                                      ],
+                                      actionsAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                    );
+
+                                    // Navigator.of(context)
+                                    //     .pushReplacement(MaterialPageRoute(
+                                    //   builder: (ctx) => ResultPage(
+                                    //     duration: stopwatch.elapsed,
+                                    //     questions: questionPage,
+                                    //     choosedAnswersList: choosedAnswersList,
+                                    //   ),
+                                    // ));
+                                  } else {
+                                    setState(() {
+                                      // _choosedAnswer = 0;
+                                      currentIndex = currentIndex !=
+                                              (questionPage.length - 1)
+                                          ? currentIndex + 1
+                                          : (questionPage.length - 1);
+                                    });
+                                  }
+                                }
+                              : null,
+                          child: Text(currentIndex + 1 == questionPage.length
+                              ? "Finish"
+                              : "Next Question"),
+                        ),
+                      ],
+                    ),
+                  ),
       ),
     );
   }
