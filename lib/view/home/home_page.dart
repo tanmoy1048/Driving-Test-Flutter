@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                                                     .questions[index]
                                                     .favorite ==
                                                 1
-                                            ? Colors.redAccent
+                                            ? Colors.orange
                                             : null,
                                         child: Text(
                                           viewModel.questions[index].id

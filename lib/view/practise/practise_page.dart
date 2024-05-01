@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
 import '../../common/function/alert_dialog.dart';
 import '../../common/widgets/answer_tile.dart';
 import '../../database/model/question_model.dart';
 import '../../service/const.dart';
-import '../favorite/favorite_viewmodel.dart';
-import 'result_page.dart';
 
 class PractiseQuestionPage extends StatefulWidget {
   const PractiseQuestionPage(
@@ -279,6 +275,7 @@ class _PractiseQuestionPageState extends State<PractiseQuestionPage> {
                               ? () {
                                   if (currentIndex + 1 == questionPage.length) {
                                     finishClicked = true;
+                                    canPop = true;
                                     setState(() {});
                                     stopwatch.stop();
                                     int correctAnswer = 0;
